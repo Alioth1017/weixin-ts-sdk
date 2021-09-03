@@ -1,0 +1,33 @@
+{
+  "name": "@alioth_91/weixin-ts-sdk",
+  "version": "1.0.0-rc.3",
+  "description": "微信js-sdk ts版本封装（jweixin-1.6.0.js）及一些全局变量",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
+    "build": "rm -fr lib && cross-env NODE_ENV=production&& rollup -c rollup.config.js",
+    "publish": "npm publish --access public"
+  },
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alioth1017/weixin-ts-sdk.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "homepage": "https://github.com/Alioth1017/weixin-ts-sdk#readme",
+  "dependencies": {
+    "weixin-js-sdk": "^1.6.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.56.3",
+    "rollup-plugin-dts": "^4.0.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.2"
+  }
+}
