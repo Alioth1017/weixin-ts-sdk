@@ -43,11 +43,20 @@ const outputMap = [
     file: packageJSON.module, // es6模块
     format: "es",
   },
+  // {
+  //   customize: true,
+  //   input: getPath("./types/index.d.ts"),
+  //   output: {
+  //     file: packageJSON.typings,
+  //     format: "es",
+  //   },
+  //   plugins: [dts()],
+  // },
   {
     customize: true,
-    input: getPath("./types/index.d.ts"),
+    input: [getPath("./src/index.ts"), getPath("./src/useWxJsSdk.ts")],
     output: {
-      file: packageJSON.types,
+      dir: "lib/types",
       format: "es",
     },
     plugins: [dts()],

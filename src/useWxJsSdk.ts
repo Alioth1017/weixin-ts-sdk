@@ -1,5 +1,10 @@
 import wx, { ApiMethod, IchooseWXPay, IConfigOptions } from "weixin-js-sdk";
 
+export function useWxJsSdk(options: IConfigOptions | undefined) {
+  options && config(options);
+  return { getLocation, wxPay, wxScanQRCode };
+}
+
 const defaultJsApiList: ApiMethod[] = [
   "updateAppMessageShareData",
   "updateTimelineShareData",
@@ -27,9 +32,6 @@ let $wx: typeof wx;
 export const config = (options: IConfigOptions) => {
   const promise = (resolve: (arg0: typeof wx) => void, reject: any) => {
     try {
-      if ($wx) {
-        return resolve($wx);
-      }
       let { signature, nonceStr, timestamp, appId, jsApiList } = options;
       jsApiList = jsApiList || defaultJsApiList;
       wx.config({
@@ -160,11 +162,4 @@ export const wxScanQRCode = ({ needResult = undefined }) => {
   };
 
   return new Promise(promise);
-};
-
-export default {
-  useWxJsSdk: (options: IConfigOptions | undefined) => {
-    options && config(options);
-    return { getLocation, wxPay, wxScanQRCode };
-  },
 };

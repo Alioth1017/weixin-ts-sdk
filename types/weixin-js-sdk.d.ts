@@ -1,4 +1,8 @@
-declare module "weixin-js-sdk" {
+// Type definitions for weixin jssdk 1.6.0
+// Project: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+declare namespace wx {
   type ImageSizeType = "original" | "compressed";
   type ImageSourceType = "album" | "camera";
   type VideoSourceType = "album" | "camera";
@@ -596,4 +600,20 @@ declare module "weixin-js-sdk" {
   }
   const miniProgram: miniProgramMethods;
   /*=============================微信小程序==============================*/
+}
+declare function wx(): void;
+
+/*=============================微信内全局变量==============================*/
+declare global {
+  interface Window {
+    WeixinJSBridge: any;
+    __wxjs_environment: any;
+  }
+  const WeixinJSBridge: any;
+}
+
+// export default wx;
+
+declare module "weixin-js-sdk" {
+  export = wx;
 }
