@@ -1,8 +1,8 @@
 import wx, { ApiMethod, IchooseWXPay, IConfigOptions } from "weixin-js-sdk";
 
-export function useWxJsSdk(options: IConfigOptions | undefined) {
-  options && config(options);
-  return { getLocation, wxPay, wxScanQRCode };
+export async function useWxJsSdk(options: IConfigOptions | undefined) {
+  options && (await config(options));
+  return { wx, getLocation, wxPay, wxScanQRCode };
 }
 
 const defaultJsApiList: ApiMethod[] = [
@@ -32,7 +32,8 @@ let $wx: typeof wx;
 export const config = (options: IConfigOptions) => {
   const promise = (resolve: (arg0: typeof wx) => void, reject: any) => {
     try {
-      let { signature, nonceStr, timestamp, appId, jsApiList } = options;
+      let { signature, nonceStr, timestamp, appId, jsApiList, openTagList } =
+        options;
       jsApiList = jsApiList || defaultJsApiList;
       wx.config({
         debug: false,
@@ -41,6 +42,7 @@ export const config = (options: IConfigOptions) => {
         timestamp,
         appId,
         jsApiList,
+        openTagList,
       });
       wx.ready(() => {
         myConsole.log("[JS-SDK] Ready-config");
@@ -48,7 +50,7 @@ export const config = (options: IConfigOptions) => {
         resolve(wx);
       });
       wx.error(function (wxError) {
-        myConsole.error("[JS-SDK] Error-config:" + wxError);
+        myConsole.error("[JS-SDK] Error-config:", wxError);
         throw wxError;
       });
     } catch (error) {
@@ -86,7 +88,7 @@ export const getLocation = () => {
         resolve(res);
       },
       fail: (err) => {
-        myConsole.error("[JS-SDK] Error-getLocation:" + err);
+        myConsole.error("[JS-SDK] Error-getLocation:", err);
         reject(err);
       },
     });
@@ -115,16 +117,16 @@ export const wxPay = (otpions: IchooseWXPay) => {
       signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
       paySign: paySign, // 支付签名
       success: function (res) {
-        myConsole.log("[JS-SDK] Success-chooseWXPay:" + res);
+        myConsole.log("[JS-SDK] Success-chooseWXPay:", res);
         resolve(res);
       },
       // 支付取消回调函数
       cancel: function (res) {
-        myConsole.error("[JS-SDK] Cancel-chooseWXPay:" + res);
+        myConsole.error("[JS-SDK] Cancel-chooseWXPay:", res);
         resolve(res);
       },
       fail: function (err) {
-        myConsole.error("[JS-SDK] Error-chooseWXPay:" + err);
+        myConsole.error("[JS-SDK] Error-chooseWXPay:", err);
         reject(err);
       },
     });
@@ -150,12 +152,12 @@ export const wxScanQRCode = ({ needResult = undefined }) => {
       needResult: needResult === undefined ? 1 : 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
       scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
       success: function (res) {
-        myConsole.log("[JS-SDK] Success-scanQRCode:" + res);
+        myConsole.log("[JS-SDK] Success-scanQRCode:", res);
         let result: string = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
         resolve(result);
       },
       fail: function (err) {
-        myConsole.error("[JS-SDK] Error-scanQRCode:" + err);
+        myConsole.error("[JS-SDK] Error-scanQRCode:", err);
         reject(err);
       },
     });

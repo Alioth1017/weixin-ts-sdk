@@ -1,6 +1,7 @@
 import wx, { IConfigOptions, IchooseWXPay } from 'weixin-js-sdk';
 
-declare function useWxJsSdk(options: IConfigOptions | undefined): {
+declare function useWxJsSdk(options: IConfigOptions | undefined): Promise<{
+    wx: typeof wx;
     getLocation: () => Promise<{
         latitude: number;
         longitude: number;
@@ -11,7 +12,7 @@ declare function useWxJsSdk(options: IConfigOptions | undefined): {
     wxScanQRCode: ({ needResult }: {
         needResult?: undefined;
     }) => Promise<string>;
-};
+}>;
 declare const useDebug: (debug: boolean) => void;
 declare const config: (options: IConfigOptions) => Promise<typeof wx>;
 /**

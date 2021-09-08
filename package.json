@@ -1,11 +1,11 @@
 {
   "name": "@alioth_91/weixin-ts-sdk",
-  "version": "1.0.0-rc.7",
+  "version": "1.0.0-rc.10",
   "description": "微信js-sdk ts版本封装（jweixin-1.6.0.js）及一些全局变量",
   "scripts": {
     "dev": "cross-env NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
     "build": "rm -fr lib && cross-env NODE_ENV=production&& rollup -c rollup.config.js",
-    "publish": "npm publish --access public",
+    "pub": "npm publish --access public",
     "postinstall": "cp -rvf ./types ../../.."
   },
   "main": "lib/index.js",
